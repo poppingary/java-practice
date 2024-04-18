@@ -1,26 +1,26 @@
 package com.java.practice.collectionsort;
 
 public class Student implements Comparable<Student> {
-    private String name;
-    private long id;
-    private double score;
+    private final String name;
+    private final int id;
+    private final double gpa;
 
-    public Student(String name, long id, double score) {
+    public Student(String name, int id, double gpa) {
         this.name = name;
         this.id = id;
-        this.score = score;
+        this.gpa = gpa;
     }
 
     public String getName() {
         return name;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public double getScore() {
-        return score;
+    public double getGpa() {
+        return gpa;
     }
 
     @Override
@@ -28,16 +28,16 @@ public class Student implements Comparable<Student> {
         return "Student{" +
                 "name='" + name + '\'' +
                 ", id=" + id +
-                ", score=" + score +
+                ", gpa=" + gpa +
                 '}';
     }
 
     @Override
-    public int compareTo(Student o) {
-        int sortById = Long.compare(this.id, o.id);
-        int sortByName = this.name.compareTo(o.getName());
-        int sortByScore = Double.compare(this.score, o.score);
+    public int compareTo(Student s) {
+        int sortById = Long.compare(this.id, s.id);
+        int sortByName = this.name.compareTo(s.getName());
+        int sortByGpa = Double.compare(this.gpa, s.gpa);
 
-        return sortByScore;
+        return sortByGpa;
     }
 }
