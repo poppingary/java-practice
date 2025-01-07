@@ -8,7 +8,7 @@ public class ComparableAndComparatorExample {
     }
 
     public static void sort() {
-        List<Student> students = new ArrayList<>(Arrays.asList(
+        List<Student> students = new ArrayList<>(List.of(
                 new Student("John", 2, 3.9),
                 new Student("Thomas", 1, 3.8),
                 new Student("George", 3, 3.4)

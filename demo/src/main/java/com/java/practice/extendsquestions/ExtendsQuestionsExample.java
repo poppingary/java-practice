@@ -10,6 +10,7 @@ public class ExtendsQuestionsExample {
 
 class Person {
     public int age = 20;
+
     public void printAge() {
         System.out.println("Person age is: " + age);
     }
@@ -19,6 +20,6 @@ class Student extends Person {
     public int age = 10;
 
     public void printAge() {
-        System.out.println("Person age is: " + age);
+        System.out.println("Student age is: " + age);
     }
 }
