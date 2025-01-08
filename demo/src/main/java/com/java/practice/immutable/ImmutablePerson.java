@@ -20,6 +20,18 @@ public final class ImmutablePerson {
         return name;
     }
 
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public String[] getHobbies() {
+        return hobbies;
+    }
+
     @Override
     public String toString() {
         return "ImmutablePerson{" +
@@ -34,12 +46,21 @@ public final class ImmutablePerson {
         Address address = new Address("123 Main St", "Any town", "NY", "12345");
         String[] hobbies = new String[] {"Reading", "Swimming"};
         ImmutablePerson immutablePerson = new ImmutablePerson("Gary", LocalDate.of(1989, 8, 9), address, hobbies);
+        System.out.println("Before modification");
         System.out.println(immutablePerson);
+        System.out.println(immutablePerson.getBirthDate());
+        System.out.println(immutablePerson.getAddress());
+        System.out.println(Arrays.toString(immutablePerson.getHobbies()));
 
         // Attempting to modify the internal state will not affect the ImmutablePerson object
         address.setStreet("456 Elm St");
         hobbies[0] = "Cooking";
+        System.out.println();
 
+        System.out.println("After modification");
         System.out.println(immutablePerson);
+        System.out.println(immutablePerson.getBirthDate());
+        System.out.println(immutablePerson.getAddress());
+        System.out.println(Arrays.toString(immutablePerson.getHobbies()));
     }
 }
