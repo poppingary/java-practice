@@ -3,33 +3,12 @@ package com.java.practice.immutable;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-public final class ImmutablePerson {
-    private final String name;
-    private final LocalDate birthDate;
-    private final Address address;
-    private final String[] hobbies;
-
+public record ImmutablePerson(String name, LocalDate birthDate, Address address, String[] hobbies) {
     public ImmutablePerson(String name, LocalDate birthDate, Address address, String[] hobbies) {
         this.name = name;
         this.birthDate = birthDate;
         this.address = new Address(address.getStreet(), address.getCity(), address.getState(), address.getZip());
         this.hobbies = hobbies.clone();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public String[] getHobbies() {
-        return hobbies;
     }
 
     @Override
@@ -44,13 +23,13 @@ public final class ImmutablePerson {
 
     public static void main(String[] args) {
         Address address = new Address("123 Main St", "Any town", "NY", "12345");
-        String[] hobbies = new String[] {"Reading", "Swimming"};
+        String[] hobbies = new String[]{"Reading", "Swimming"};
         ImmutablePerson immutablePerson = new ImmutablePerson("Gary", LocalDate.of(1989, 8, 9), address, hobbies);
         System.out.println("Before modification");
         System.out.println(immutablePerson);
-        System.out.println(immutablePerson.getBirthDate());
-        System.out.println(immutablePerson.getAddress());
-        System.out.println(Arrays.toString(immutablePerson.getHobbies()));
+        System.out.println(immutablePerson.birthDate());
+        System.out.println(immutablePerson.address());
+        System.out.println(Arrays.toString(immutablePerson.hobbies()));
 
         // Attempting to modify the internal state will not affect the ImmutablePerson object
         address.setStreet("456 Elm St");
@@ -59,8 +38,8 @@ public final class ImmutablePerson {
 
         System.out.println("After modification");
         System.out.println(immutablePerson);
-        System.out.println(immutablePerson.getBirthDate());
-        System.out.println(immutablePerson.getAddress());
-        System.out.println(Arrays.toString(immutablePerson.getHobbies()));
+        System.out.println(immutablePerson.birthDate());
+        System.out.println(immutablePerson.address());
+        System.out.println(Arrays.toString(immutablePerson.hobbies()));
     }
 }
