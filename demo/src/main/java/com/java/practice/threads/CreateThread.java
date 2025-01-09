@@ -2,6 +2,7 @@ package com.java.practice.threads;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.IntStream;
 
 public class CreateThread {
     static class MyThread extends Thread {
@@ -31,9 +32,7 @@ public class CreateThread {
 
         // 4. Using Executor Framework
         ExecutorService executorService = Executors.newFixedThreadPool(2);
-        executorService.submit(() -> task("Thread (ExecutorService Task 1): "));
-        executorService.submit(() -> task("Thread (ExecutorService Task 2): "));
-
+        IntStream.range(0, 2).forEach(i -> executorService.submit(() -> task("Thread (ExecutorService Task " + i + "): ")));
         executorService.shutdown();
     }
 
