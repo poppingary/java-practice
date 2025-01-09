@@ -6,27 +6,13 @@ import java.util.concurrent.Executors;
 public class CreateThread {
     static class MyThread extends Thread {
         public void run() {
-            for (int i = 0; i < 3; i++) {
-                System.out.println("Thread (Extends Thread): " + i);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+            task("Thread (Extends Thread): ");
         }
     }
 
     static class MyRunnable implements Runnable {
         public void run() {
-            for (int i = 0; i < 3; i++) {
-                System.out.println("Thread (Implements Runnable): " + i);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+            task("Thread (Implements Runnable): ");
         }
     }
 
@@ -40,41 +26,25 @@ public class CreateThread {
         myRunnable.start();
 
         // 3. Using Lambda Expression
-        Thread myRunnableLambda = new Thread(() -> {
-            for (int i = 0; i < 3; i++) {
-                System.out.println("Thread (Lambda): " + i);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        Thread myRunnableLambda = new Thread(() -> task("Thread (Lambda): "));
         myRunnableLambda.start();
 
         // 4. Using Executor Framework
         ExecutorService executorService = Executors.newFixedThreadPool(2);
-        executorService.submit(() -> {
-            for (int i = 0; i < 3; i++) {
-                System.out.println("Thread (ExecutorService Task 1): " + i);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-        executorService.submit(() -> {
-            for (int i = 0; i < 3; i++) {
-                System.out.println("Thread (ExecutorService Task 2): " + i);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        executorService.submit(() -> task("Thread (ExecutorService Task 1): "));
+        executorService.submit(() -> task("Thread (ExecutorService Task 2): "));
 
         executorService.shutdown();
+    }
+
+    private static void task(String x) {
+        for (int i = 0; i < 3; i++) {
+            System.out.println(x + i);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
