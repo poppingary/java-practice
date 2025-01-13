@@ -1,6 +1,6 @@
 package com.java.practice.immutable;
 
-public class Address {
+public class Address implements Cloneable {
     private String street;
     private String city;
     private String state;
@@ -43,6 +43,11 @@ public class Address {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new Address(street, city, state, zip);
     }
 
     @Override

@@ -1,14 +1,36 @@
 package com.java.practice.immutable;
 
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-public record ImmutablePerson(String name, LocalDate birthDate, Address address, String[] hobbies) {
-    public ImmutablePerson(String name, LocalDate birthDate, Address address, String[] hobbies) {
+public final class ImmutablePerson {
+    private final String name;
+    private final LocalDate birthDate;
+    private final Address address;
+    private final List<String> hobbies;
+
+    public ImmutablePerson(String name, LocalDate birthDate, Address address, List<String> hobbies) throws CloneNotSupportedException {
         this.name = name;
         this.birthDate = birthDate;
-        this.address = new Address(address.getStreet(), address.getCity(), address.getState(), address.getZip());
-        this.hobbies = hobbies.clone();
+        this.address = (Address) address.clone();
+        this.hobbies = new ArrayList<>(hobbies);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public Address getAddress() throws CloneNotSupportedException {
+        return (Address) address.clone();
+    }
+
+    public List<String> getHobbies() {
+        return new ArrayList<>(hobbies);
     }
 
     @Override
@@ -17,29 +39,24 @@ public record ImmutablePerson(String name, LocalDate birthDate, Address address,
                 "name='" + name + '\'' +
                 ", birthDate=" + birthDate +
                 ", address=" + address +
-                ", hobbies=" + Arrays.toString(hobbies) +
+                ", hobbies=" + hobbies +
                 '}';
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
         Address address = new Address("123 Main St", "Any town", "NY", "12345");
-        String[] hobbies = new String[]{"Reading", "Swimming"};
+        List<String> hobbies = List.of("Reading", "Swimming");
         ImmutablePerson immutablePerson = new ImmutablePerson("Gary", LocalDate.of(1989, 8, 9), address, hobbies);
         System.out.println("Before modification");
         System.out.println(immutablePerson);
-        System.out.println(immutablePerson.birthDate());
-        System.out.println(immutablePerson.address());
-        System.out.println(Arrays.toString(immutablePerson.hobbies()));
 
         // Attempting to modify the internal state will not affect the ImmutablePerson object
-        address.setStreet("456 Elm St");
-        hobbies[0] = "Cooking";
+        immutablePerson.getBirthDate().plusYears(10);
+        immutablePerson.getAddress().setStreet("456 Elm St");
+        immutablePerson.getHobbies().add("Hiking");
         System.out.println();
 
         System.out.println("After modification");
         System.out.println(immutablePerson);
-        System.out.println(immutablePerson.birthDate());
-        System.out.println(immutablePerson.address());
-        System.out.println(Arrays.toString(immutablePerson.hobbies()));
     }
 }
