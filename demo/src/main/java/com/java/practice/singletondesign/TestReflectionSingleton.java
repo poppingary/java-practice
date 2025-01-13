@@ -18,8 +18,8 @@ public class TestReflectionSingleton {
         TestReflectionSingleton instance1 = TestReflectionSingleton.getInstance();
         TestReflectionSingleton instance2 = null;
 
-        Constructor[] constructors = TestReflectionSingleton.class.getDeclaredConstructors();
-        for (Constructor constructor : constructors) {
+        Constructor<?>[] constructors = TestReflectionSingleton.class.getDeclaredConstructors();
+        for (Constructor<?> constructor : constructors) {
             // Below code will destroy the singleton pattern
             constructor.setAccessible(true);
             instance2 = (TestReflectionSingleton) constructor.newInstance();
