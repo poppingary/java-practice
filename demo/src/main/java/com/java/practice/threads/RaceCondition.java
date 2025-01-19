@@ -1,4 +1,4 @@
-package com.java.practice.threads.race;
+package com.java.practice.threads;
 
 public class RaceCondition {
     public static void main(String[] args) {
