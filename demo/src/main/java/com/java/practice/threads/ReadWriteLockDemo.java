@@ -3,7 +3,7 @@ package com.java.practice.threads;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class ReadWriteLockExample {
+public class ReadWriteLockDemo {
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
     private int sharedData = 0;
 
@@ -29,7 +29,7 @@ public class ReadWriteLockExample {
     }
 
     public static void main(String[] args) {
-        ReadWriteLockExample example = new ReadWriteLockExample();
+        ReadWriteLockDemo example = new ReadWriteLockDemo();
 
         // Multiple threads reading concurrently
         Runnable readTask = () -> {

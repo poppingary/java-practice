@@ -1,4 +1,4 @@
-package com.java.practice.threads;
+package com.java.practice.threads.waitandnotify;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -11,6 +11,7 @@ public class WaitNotify {
         executorService.submit(() -> {
             for (int i = 0; i < 5; i++) {
                 try {
+                    Thread.sleep(1000);
                     queue.produce(i);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
@@ -21,7 +22,6 @@ public class WaitNotify {
         executorService.submit(() -> {
             for (int i = 0; i < 5; i++) {
                 try {
-                    Thread.sleep(1000);
                     queue.consume();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
@@ -50,6 +50,7 @@ class SharedQueue {
 
     public synchronized void consume() throws InterruptedException {
         while (!hasData) {
+            System.out.println("Waiting to consume data");
             wait();
         }
         hasData = false;

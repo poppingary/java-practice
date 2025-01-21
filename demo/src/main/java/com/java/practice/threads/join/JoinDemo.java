@@ -1,6 +1,6 @@
-package com.java.practice.threads;
+package com.java.practice.threads.join;
 
-public class Join {
+public class JoinDemo {
     public static void main(String[] args) {
         // Simulated shared resource for file content
         StringBuffer sharedData = new StringBuffer();

@@ -2,7 +2,7 @@ package com.java.practice.threads;
 
 import java.util.concurrent.CountDownLatch;
 
-public class CountDownLatchExample {
+public class CountDownLatchDemo {
     public static void main(String[] args) {
         // CountDownLatch with count 3
         CountDownLatch latch = new CountDownLatch(3);

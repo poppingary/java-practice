@@ -2,7 +2,7 @@ package com.java.practice.threads;
 
 import java.util.concurrent.Semaphore;
 
-public class SemaphoreExample {
+public class SemaphoreDemo {
     public static void main(String[] args) {
         // Create a semaphore with 2 permits
         Semaphore semaphore = new Semaphore(2);

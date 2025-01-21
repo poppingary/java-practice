@@ -3,7 +3,7 @@ package com.java.practice.threads.lock;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class LockExample {
+public class LockDemo {
     public static void main(String[] args) {
         Counter counter = new Counter();
 
