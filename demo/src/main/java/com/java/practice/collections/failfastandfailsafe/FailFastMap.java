@@ -1,4 +1,4 @@
-package com.java.practice.collections;
+package com.java.practice.collections.failfastandfailsafe;
 
 import java.util.HashMap;
 import java.util.Map;

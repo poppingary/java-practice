@@ -1,4 +1,4 @@
-package com.java.practice.collections;
+package com.java.practice.collections.failfastandfailsafe;
 
 import java.util.ArrayList;
 import java.util.List;

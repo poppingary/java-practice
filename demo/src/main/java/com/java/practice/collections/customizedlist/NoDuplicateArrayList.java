@@ -1,4 +1,4 @@
-package com.java.practice.collections;
+package com.java.practice.collections.customizedlist;
 
 import java.util.ArrayList;
 
