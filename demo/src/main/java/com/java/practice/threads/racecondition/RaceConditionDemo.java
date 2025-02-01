@@ -1,18 +1,25 @@
 package com.java.practice.threads.racecondition;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class RaceConditionDemo {
     public static void main(String[] args) {
-        Counter counter = new Counter();
+        lockSolution();
+        synchronizedSolution();
+    }
+
+    private static void lockSolution() {
+        LocksCounter locksCounter = new LocksCounter();
 
         Thread thread1 = new Thread(() -> {
             for (int i = 0; i < 1000; i++) {
-                counter.increment();
+                locksCounter.increment();
             }
         });
 
         Thread thread2 = new Thread(() -> {
             for (int i = 0; i < 1000; i++) {
-                counter.increment();
+                locksCounter.increment();
             }
         });
 
@@ -26,27 +33,64 @@ public class RaceConditionDemo {
             System.out.println(e.getMessage());
         }
 
-        System.out.println("Counter: " + counter.getCount());
+        System.out.println("Locks Counter: " + locksCounter.getCount());
+    }
+
+    private static void synchronizedSolution() {
+        SynchronizedCounter synchronizedCounter = new SynchronizedCounter();
+
+        Thread thread1 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                synchronizedCounter.increment();
+            }
+        });
+
+        Thread thread2 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                synchronizedCounter.increment();
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("Synchronized Counter: " + synchronizedCounter.getCount());
     }
 }
 
-class Counter {
-    private volatile int count = 0;
+// Locks method
+class LocksCounter {
+    private int count = 0;
+    private final ReentrantLock lock = new ReentrantLock();
 
-    // Problem
-//    public void increment() {
-//        count++;
-//    }
-
-    // Solution 1 - volatile keyword to count variable
-    public void increment() {
-        count++;
+    public synchronized void increment() {
+        lock.lock(); // Acquire the lock
+        try {
+            count++; // Critical section
+        } finally {
+            lock.unlock(); // Release the lock
+        }
     }
 
-    // Solution 2 - synchronized method
-//    public synchronized void increment() {
-//        count++;
-//    }
+    public int getCount() {
+        return count;
+    }
+}
+
+// Synchronized method
+class SynchronizedCounter {
+    private int count = 0;
+
+    public synchronized void increment() {
+        count++;
+    }
 
     public int getCount() {
         return count;
