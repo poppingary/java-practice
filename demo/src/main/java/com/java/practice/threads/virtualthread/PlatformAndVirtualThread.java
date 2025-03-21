@@ -2,8 +2,7 @@ package com.java.practice.threads.virtualthread;
 
 import java.util.concurrent.CountDownLatch;
 
-public class VirtualThreadDemo {
-
+public class PlatformAndVirtualThread {
     public static void main(String[] args) throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(2);
 
@@ -17,6 +16,6 @@ public class VirtualThreadDemo {
             latch.countDown();
         });
 
-        latch.await(); // Wait for both threads to finish
+        latch.await();
     }
 }
