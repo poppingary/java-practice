@@ -8,70 +8,73 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class CreateStreamDemo {
     public static void main(String[] args) throws IOException {
         // From Collections
-        List<Integer> listInteger = List.of(1, 2, 3);
-        Stream<Integer> listIntegerStream = listInteger.stream();
-        listIntegerStream.forEach(System.out::print); // 1, 2, 3
-        System.out.println();
-        List<String> listString = List.of("apple", "banana", "cherry");
-        Stream<String> listStringStream = listString.stream();
-        listStringStream.forEach(System.out::print); // apple, banana, cherry
-
-        System.out.println();
+        List<Integer> list = List.of(1, 2, 3);
+        String outputList = list.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(", "));
+        System.out.println(outputList); // 1, 2, 3
 
         // From Arrays
-        Integer[] arrInteger = {1, 2, 3, 4, 5};
-        Stream<Integer> arrIntegerStream = Arrays.stream(arrInteger, 1, 4);
-        arrIntegerStream.forEach(System.out::print); // 2, 3, 4
-        System.out.println();
-        String[] arrString = {"apple", "banana", "cherry"};
-        Stream<String> arrStringStream = Arrays.stream(arrString, 0, 2);
-        arrStringStream.forEach(System.out::print); // apple, banana
-
-        System.out.println();
+        Integer[] arr = {1, 2, 3, 4, 5};
+        String outputArr = Arrays.stream(arr, 1, 4)
+                .map(String::valueOf)
+                .collect(Collectors.joining(", "));
+        System.out.println(outputArr); // 2, 3, 4
 
         // From Values
-        Stream<Integer> integerStream = Stream.of(3, 4, 5);
-        integerStream.forEach(System.out::print); // 3, 4, 5
-        System.out.println();
-        Stream<String> stringStream = Stream.of("4", "5", "6");
-        stringStream.forEach(System.out::print); // 4, 5, 6
-
-        System.out.println();
+        String outputValues = Stream.of(3, 4, 5)
+                .map(String::valueOf)
+                .collect(Collectors.joining(", "));
+        System.out.println(outputValues); // 3, 4, 5
 
         // From Ranges
-        IntStream intStream = IntStream.range(5, 8);
-        intStream.forEach(System.out::print); // 5, 6, 7
-        System.out.println();
-        IntStream streamClosed = IntStream.rangeClosed(6, 8);
-        streamClosed.forEach(System.out::print); // 6, 7, 8
+        String outputRange = IntStream.range(4, 7)
+                .mapToObj(String::valueOf)
+                .collect(Collectors.joining(", "));
+        System.out.println(outputRange); // 4, 5, 6
 
-        System.out.println();
+        String outputRangeClosed = IntStream.rangeClosed(4, 7)
+                .mapToObj(String::valueOf)
+                .collect(Collectors.joining(", "));
+        System.out.println(outputRangeClosed); // 4, 5, 6, 7
 
         // From Infinite
-        Stream<Integer> stream = Stream.iterate(7, n -> n + 2);
-        stream.limit(3).forEach(System.out::print); // 7, 9, 11
-        System.out.println();
-        Stream<Double> randomStream = Stream.generate(Math::random).map(number -> new BigDecimal(number).setScale(2, RoundingMode.DOWN).doubleValue());
-        randomStream.limit(3).forEach(System.out::println); // 0.12, 0.34, 0.56, ...
+        String outputInfinite = Stream.iterate(5, n -> n + 2)
+                .limit(3)
+                .map(String::valueOf)
+                .collect(Collectors.joining(", "));
+        System.out.println(outputInfinite); // 5, 7, 9
+
+        String outputRandom = Stream.generate(Math::random)
+                .map(number -> new BigDecimal(number).setScale(2, RoundingMode.DOWN).toString())
+                .limit(3)
+                .collect(Collectors.joining(", "));
+        System.out.println(outputRandom); // 0.xx, 0.xx, 0.xx
 
         // From I/O
-        Stream<String> fileStream = Files.lines(Paths.get("/Users/Poppingary/Documents/Java_workspace/products_nio.csv"));
-        fileStream.limit(3).forEach(System.out::println); // Print 3 line of the file
+        try (Stream<String> fileStream = Files.lines(Paths.get("/Users/Poppingary/Documents/Java_workspace/products_nio.csv"))) {
+            String outputFile = fileStream.limit(3).collect(Collectors.joining("\n"));
+            System.out.println(outputFile);
+            // First three lines of the file (separated by newlines)
+        }
 
         // From Strings
-        IntStream charStream = "Hello".chars();
-        charStream.forEach(c -> System.out.print((char) c)); // Hello
-
-        System.out.println();
+        String outputChars = "Hello".chars()
+                .mapToObj(c -> String.valueOf((char) c))
+                .collect(Collectors.joining(", "));
+        System.out.println(outputChars); // H, e, l, l, o
 
         // From Patterns
-        Stream<String> patternStream = Pattern.compile(",").splitAsStream("apple,banana,cherry");
-        patternStream.forEach(System.out::print); // apple, banana, cherry
+        String outputPattern = Pattern.compile(",")
+                .splitAsStream("apple,banana,cherry")
+                .collect(Collectors.joining(", "));
+        System.out.println(outputPattern); // apple, banana, cherry
     }
 }
