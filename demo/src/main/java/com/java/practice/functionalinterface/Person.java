@@ -2,15 +2,17 @@ package com.java.practice.functionalinterface;
 
 import java.util.List;
 
-public class Person {
-    private String name;
-    private int age;
-    private String email;
-
-    public Person(String name, int age, String email) {
-        this.name = name;
-        this.age = age;
-        this.email = email;
+public record Person(String name, int age, String email) {
+    public Person {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name cannot be null or blank");
+        }
+        if (age < 0) {
+            throw new IllegalArgumentException("Age cannot be negative");
+        }
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("Email cannot be null or blank");
+        }
     }
 
     public static List<Person> createList() {
@@ -22,39 +24,6 @@ public class Person {
                 new Person("Phil", 55, "phil@x.com"),
                 new Person("Betty", 85, "betty@x.com")
         );
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", email='" + email + '\'' +
-                '}';
     }
 
     public void printPerson() {

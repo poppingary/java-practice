@@ -24,7 +24,7 @@ public class LambdaExpressionDemo {
         System.out.println();
 
         // Predicate
-        Predicate<Person> olderThan23 = p -> p.getAge() >= 23;
+        Predicate<Person> olderThan23 = p -> p.age() >= 23;
         for (Person p : Person.createList()) {
             if (olderThan23.test(p)) {
                 System.out.println(p);
@@ -43,7 +43,7 @@ public class LambdaExpressionDemo {
         System.out.println();
 
         // Function
-        Function<Person, String> getNameFromPerson = Person::getName;
+        Function<Person, String> getNameFromPerson = Person::name;
         for (Person p : persons) {
             System.out.println(getNameFromPerson.apply(p));
         }
